@@ -6,9 +6,9 @@ Content.propTypes = {
 };
 
 function Content(props) {
+
     return (
-        <div>
-            <h2>Welcome to Router React DOM!</h2>
+        <div className='main-content'>
         </div>
     );
 }

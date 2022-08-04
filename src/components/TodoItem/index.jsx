@@ -23,17 +23,19 @@ function TodoItem({card}) {
     }
     return (
         <div className='card-item'>
-             <p>Title: <span>{card.title}</span></p>   
-             <p>Creator: <span>{card.creator}</span></p>   
-             <p style={{color: `${color}`}}>Status: <span>{statusValue}</span></p>   
-             <p>Description: <span>{card.desc}</span></p>   
-             <div>
+            <div className='card-item__info'>
+                <p>Title: <span>{card.title}</span></p>   
+                <p>Creator: <span>{card.creator}</span></p>   
+                <p style={{color: `${color}`}}>Status: <span>{statusValue}</span></p>   
+                <p>Description: <span>{card.description}</span></p>   
+            </div>
+            <div className='card-item__select'>
                 <select onChange={handleChangeStatus}>
                     <option value="New">New</option>
                     <option value="Doing" >Doing</option>
                     <option value="Done" >Done</option>
                 </select>
-             </div>
+            </div>
         </div>
     );
 }

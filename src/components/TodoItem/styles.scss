@@ -1,16 +1,20 @@
 .card-item {
     width: 230px;
-    height: 210px;
-    p {
-        font-weight: bold;
-        span {
-            font-weight: 450;
-            margin-left: 5px;
+    min-height: 230px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &__info {
+        p {
+            font-weight: bold;
+            span {
+                font-weight: 450;
+                margin-left: 5px;
+            }
         }
     }
-    div {
+    &__select {
         text-align: center;
-        margin-top: 40px;
         select {
             padding: 8px 10px ;
             background-color: #675bf1;
@@ -19,6 +23,11 @@
             border-radius: 8px;
             font-weight: bold;
             outline: none;
+            width: 100px;
+        }
+        select:hover {
+            cursor: pointer;
+            opacity: 0.9;
         }
     }
 }
