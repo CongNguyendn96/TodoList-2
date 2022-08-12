@@ -1,13 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import TodoItem from "../TodoItem";
 import './styles.scss';
-import Pagination from '../Pagination';
+import {URL} from "../../constant"
 TodoList.propTypes = {
     
 };
 
-function TodoList(props) {
+function TodoList() {
+    const [listCard, setListcard] = useState([]);
+    // get listCard API
+    useEffect(() => {
+        fetch(URL)
+        .then((response) =>  response.json())
+        .then((data) => {
+            setListcard(data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    },[listCard]);
+    const changeItemStatus = (selectedItem, changedStatus) => {
+        // call fetch API PUT update
+        fetch(`${URL}/${selectedItem.id}`, {
+            method: "PUT",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json; charset=UTF-8",
+            },
+            body: JSON.stringify({...selectedItem, status: changedStatus}),
+        })
+        .then((response) => response.json())
+        .then(() => {
+            const updatedListCard = listCard.map((obj) => {
+                if(obj.id === selectedItem.currentId) {
+                    obj.status = changedStatus;
+                    return obj;
+                }
+                return obj;
+            });
+            setListcard(updatedListCard);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    };
     // const cardList = [
     //     {
     //         id:1,
@@ -66,17 +103,14 @@ function TodoList(props) {
     //         desc: "This is a task",
     //     },
     // ]
-    const listCard =JSON.parse(localStorage.getItem('data')) || []; 
+
     return (
         <div style={{marginTop: "30px", marginLeft:"20px"}}>
             <ul className='card-list'>
-                {listCard && listCard.map((card,index) => (
-                    <li key = {index}>
-                        <TodoItem card = {card} key={card.index}/>
-                    </li>
+                {listCard.length > 0 && listCard.map((card,index) => (
+                    <TodoItem initialItem = {card} key={index} handleChangeStatus = {changeItemStatus}/>
                 ))}
             </ul>
-            <Pagination/>
         </div>
     );
 }

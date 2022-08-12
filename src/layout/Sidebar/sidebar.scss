@@ -1,0 +1,25 @@
+.sidebar {
+    height:calc(100vh - 67px) ;
+    background-color: #f88f14;  
+    .nav {
+        // background-color: #f88f14;  
+        padding: 0;
+        margin: 0;
+        &__item {
+            list-style: none;
+            border-bottom: 2px solid #fff;
+            input {
+                padding: 10px 0;
+                width: 220px;
+                color: #fff;
+                border: none;
+                font-size: 19px;
+                background-color: #f88f14;  
+            }
+            input:hover {
+                cursor: pointer;
+                opacity: 0.85;
+            }
+        }
+    }
+}

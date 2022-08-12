@@ -1,42 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useState} from "react";
 import './styles.scss';
-TodoItem.propTypes = {
-    card: PropTypes.object.isRequired,
-};
+import {useState} from "react";
 
-function TodoItem({card}) {
-    const [statusValue, setStatusValue] = useState('New');
+const TodoItem = ({initialItem, handleChangeStatus}) => {
+    const ALL_STATUS = ["New", "Doing", "Done"];
+    // const [statusValue, setStatusValue] = useState(initialItem.status);
+    // const [card, setCard] = useState(initialItem);
     const [color, setColor] = useState('green');
-    function handleChangeStatus(e) {
-        setStatusValue(e.target.value);        
-        if (e.target.value === "New") {
+
+    function handleChangeColor(e) {
+        const currentStatus = e.target.value;       
+        if (currentStatus === "New") {
             setColor('green');
         }
-        if(e.target.value === "Doing") {
+        if(currentStatus === "Doing") {
             setColor('purple');
         }
-        if (e.target.value === "Done") {
+        if (currentStatus === "Done") {
             setColor('blue');
         }
     }
+
     return (
-        <div className='card-item'>
-            <div className='card-item__info'>
-                <p>Title: <span>{card.title}</span></p>   
-                <p>Creator: <span>{card.creator}</span></p>   
-                <p style={{color: `${color}`}}>Status: <span>{statusValue}</span></p>   
-                <p>Description: <span>{card.description}</span></p>   
+        <li key={initialItem.id}>
+            <div className='card-item'>
+                <div className='card-item__info'>
+                    <p>Title: <span>{initialItem.title}</span></p>   
+                    <p>Creator: <span>{initialItem.creator}</span></p>   
+                    <p style ={{color: `${color}`}}>Status: <span>{initialItem.status}</span></p>   
+                    <p>Description: <span>{initialItem.description}</span></p>   
+                </div>
+                <div className='card-item__select'>
+                    <select onChange={(e) => {handleChangeStatus(initialItem, e.target.value); handleChangeColor(e)}}>
+                        {ALL_STATUS.map((item,index) => {
+                              return (
+                                <option key={index} value={item}>{item}</option>
+                              );      
+                                })}
+                    </select>
+                </div>
             </div>
-            <div className='card-item__select'>
-                <select onChange={handleChangeStatus}>
-                    <option value="New">New</option>
-                    <option value="Doing" >Doing</option>
-                    <option value="Done" >Done</option>
-                </select>
-            </div>
-        </div>
+        </li>
     );
 }
 
